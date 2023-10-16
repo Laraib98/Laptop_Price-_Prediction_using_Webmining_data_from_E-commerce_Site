@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+</head>
+<style>
+    .image-container{
+        background-color: #d9e9f4;
+        padding: 30px;
+        border: 20px solid #bbdff7;
+        align-items: center;
+    }
+
+    img{
+        max-height: 300px;
+        max-width: 300px;
+        margin: 10px;
+    }
+    h1{
+        color: #045083;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>Image Gallery</h1>
+
+    <div class="image-container">
+        <img src="{% static 'images/1.png' %}" alt="Image 1">
+        <img src="{% static 'images/2.png' %}" alt="Image 2">
+        <img src="{% static 'images/3.png' %}" alt="Image 3">
+        <img src="{% static 'images/6.png' %}" alt="Image 6">
+        <img src="{% static 'images/7.png' %}" alt="Image 7">
+        <img src="{% static 'images/8.png' %}" alt="Image 8">
+        <img src="{% static 'images/9.png' %}" alt="Image 9">
+        <img src="{% static 'images/10.png' %}" alt="Image 10">
+        <img src="{% static 'images/11.png' %}" alt="Image 11">
+        <img src="{% static 'images/12.png' %}" alt="Image 12">
+        <img src="{% static 'images/13.png' %}" alt="Image 13">
+        <img src="{% static 'images/14.png' %}" alt="Image 14">
+        <img src="{% static 'images/15.png' %}" alt="Image 15">
+        <img src="{% static 'images/16.png' %}" alt="Image 16">
+        <img src="{% static 'images/17.png' %}" alt="Image 17">
+        <img src="{% static 'images/18.png' %}" alt="Image 18">
+        <img src="{% static 'images/4.png' %}" alt="Image 4">
+        <img src="{% static 'images/19.png' %}" alt="Image 19">
+        <img src="{% static 'images/20.png' %}" alt="Image 20">
+        <img src="{% static 'images/21.png' %}" alt="Image 21">
+    </div>
+</body>
+</html>

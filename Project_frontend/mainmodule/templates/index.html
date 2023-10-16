@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="index.css"> -->
+    <title>Laptop Prediction</title>
+
+    <style>
+        .container {
+            background-color: #f3fafe;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        h2 {
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            color: #097da0;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            outline: none;
+            border: none;
+            background-color: #e7faff;
+            color: #777;
+            border-radius: 5px;
+        }
+
+        #predictResult {
+            display: none;
+            /* background-color: #e8fefe; */
+            margin-top: 30px;
+            padding: 25px;
+            box-shadow: 2px 3px 4px #999;
+            align-items: center;
+            border-radius: 5px;
+            width: 50%;
+        }
+
+        input [type='number'] {
+            background-color: #e7faff;
+        }
+
+        #predictResult h1 {
+            color: #a02f09;
+            font-weight: 750;
+        }
+
+        .navigation-menu {
+            position: fixed;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        .navigation-menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navigation-menu li {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .navigation-menu li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            background-color: #f2f2f2;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        .navigation-menu li a:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navigation-menu">
+            <ul>
+                <li><a href="{% url 'analysis'%}">Analysis</a></li>
+                <li><a href="{% url 'visualize'%}">Visualization</a></li>
+            </ul>
+        </div>
+        <h2>Laptop price predictor <i class="fa-solid fa-laptop fs-1"></i></h2>
+
+        <hr>
+        <form method="POST" action="{% url 'predict'%}">
+            {% csrf_token %}
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <label for="brand">Brand</label>
+                        <select name="brand" id="brand">
+                            <option value="Apple">Apple</option>
+                            <option value="HP">HP</option>
+                            <option value="Acer">Acer</option>
+                            <option value="Asus">Asus</option>
+                            <option value="Dell">Dell</option>
+                            <option value="Lenovo">Lenovo</option>
+                            <option value="Chuwi">Chuwi</option>
+                            <option value="MSI">MSI</option>
+                            <option value="Microsoft">Microsoft</option>
+                            <option value="Toshiba">Toshiba</option>
+                            <option value="Huawei">Huawei</option>
+                            <option value="Xiaomi">Xiaomi</option>
+                            <option value="Vero">Vero</option>
+                            <option value="Razer">Razer</option>
+                            <option value="Mediacom">Mediacom</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Google">Google</option>
+                            <option value="Fujitsu">Fujitsu</option>
+                            <option value="LG">LG</option>
+                            <option value="apple">Apple</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label for="Type">Type</label>
+                        <select name="type" id="type">
+                            <option value="Notebook">Notebook</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Ultrabook">Ultrabook</option>
+                            <option value="2 in 1 Convertible">2 in 1 Convertible</option>
+                            <option value="Workstation">Workstation</option>
+                            <option value="Netbook">Netbook</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label for="RAM">RAM (in GB)</label>
+                        <select name="ram" id="ram">
+                            <option value="8">8</option>
+                            <option value="4">4</option>
+                            <option value="16">16</option>
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="2">2</option>
+                            <option value="32">32</option>
+                            <option value="24">24</option>
+                            <option value="64">64</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="CPU">CPU</label>
+                    <select name="CPU" id="CPU">
+                        <option value="Intel Core i7">Intel core i7</option>
+                        <option value="Intel Core i5">Intel core i5</option>
+                        <option value="Other Intel Processor">Other Intel Processor</option>
+                        <option value="Intel Core i3">Intel core i3</option>
+                        <option value="AMD processor">AMD processor</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label for="GPU">GPU</label>
+                        <select name="GPU" id="GPU">
+                            <option value="Intel">Intel</option>
+                            <option value="Nvidia">Nvidia</option>
+                            <option value="AMD">AMD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="OS">OS</label>
+                    <select name="OS" id="OS">
+                        <option value="Windows">Windows</option>
+                        <option value="MAC">MAC</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="HDD">HDD (in GB)</label>
+                    <select name="HDD" id="HDD">
+                        <option value="0">0</option>
+                        <option value="128">128</option>
+                        <option value="256">256</option>
+                        <option value="512">512</option>
+                        <option value="1024">1024</option>
+                        <option value="2048">2048</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="SSD">SSD (in GB)</label>
+                    <select name="SSD" id="SSD">
+                        <option value="0">0</option>
+                        <option value="8">8</option>
+                        <option value="128">128</option>
+                        <option value="256">256</option>
+                        <option value="512">512</option>
+                        <option value="1024">1024</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="Resolution">Screen Resolution</label>
+                    <select name="Resolution" id="Resolution">
+                        <option value="1920*1080">1920*1080</option>
+                        <option value="1366*768">1366*768</option>
+                        <option value="1600*900">1600*900</option>
+                        <option value="3840*2160">3840*2160</option>
+                        <option value="3200*1800">3200*1800</option>
+                        <option value="2880*1800">2880*1800</option>
+                        <option value="2560*1600">2560*1600</option>
+                        <option value="2560*1440">2560*1440</option>
+                        <option value="2304*1440">2304*1440</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label for="Touchscreen">Touchscreen</label>
+                        <select name="Touchscreen" id="Touchscreen">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-outline">
+                    <input type="number" name="weight" id="form6Example2" class="form-control" />
+                    <label class="form-label" for="form6Example2">Weight (in KG)</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                    <label for="IPS">IPS</label>
+                    <select name="IPS" id="IPS">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-primary mb-4 fs-6 w-25 mt-5"
+                style="align-content: center;">Predict</button>
+    </div>
+
+    <!-- Submit button -->
+
+    </form>
+
+    </div>
+
+
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
+    <script>
+        function showResult() {
+            var x = document.getElementById('predictResult');
+            if (x.style.display === 'none') {
+                x.style.display = 'block'
+            }
+            else {
+                x.style.display = 'none'
+            }
+        }
+    </script>
+</body>
+
+</html>
